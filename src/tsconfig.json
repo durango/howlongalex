@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "experimentalDecorators": true,
+    "isolatedModules": false,
+    "removeComments": false,
+    "jsx": "react",
+    "target": "es2016",
+    "module": "commonjs",
+    "lib": ["ESNext", "DOM"],
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "importHelpers": true,
+    "pretty": true,
+    "strict": true,
+    "types": ["node"],
+    "noImplicitAny": false
+  },
+  "exclude": ["node_modules", "dist"]
+}
