@@ -37,7 +37,10 @@ const webpackEnv = process.env.NODE_ENV ?? 'development'
 const isEnvDevelopment = webpackEnv === 'development'
 const isEnvProduction = webpackEnv === 'production'
 
-const getStyleLoaders = (cssOptions: webpack.NewLoader['options'], preProcessor?: string): webpack.Loader[] => {
+const getStyleLoaders = (
+	cssOptions: webpack.NewLoader['options'],
+	preProcessor?: string
+): webpack.Loader[] => {
 	return [
 		isEnvDevelopment && 'style-loader',
 		isEnvProduction && {
@@ -79,7 +82,11 @@ const getStyleLoaders = (cssOptions: webpack.NewLoader['options'], preProcessor?
 }
 
 const config: webpack.Configuration = {
-	mode: isEnvProduction ? 'production' : isEnvDevelopment ? 'development' : 'none',
+	mode: isEnvProduction
+		? 'production'
+		: isEnvDevelopment
+		? 'development'
+		: 'none',
 	// Stop compilation early in production
 	bail: isEnvProduction,
 	devtool: isEnvProduction
@@ -87,8 +94,8 @@ const config: webpack.Configuration = {
 			? 'source-map'
 			: false
 		: isEnvDevelopment
-			? 'cheap-module-source-map'
-			: false,
+		? 'cheap-module-source-map'
+		: false,
 	// These are the "entry points" to our application.
 	// This means they will be the "root" imports that are included in JS bundle.
 	entry: () => {
@@ -107,23 +114,27 @@ const config: webpack.Configuration = {
 		filename: isEnvProduction
 			? 'static/js/[name].[hash:8].js'
 			: isEnvDevelopment
-				? 'static/js/[name].js'
-				: undefined,
+			? 'static/js/[name].js'
+			: undefined,
 		// TODO: remove this when upgrading to webpack 5
 		futureEmitAssets: true,
 		// There are also additional JS chunk files if you use code splitting.
 		chunkFilename: isEnvProduction
 			? 'static/js/[name].[hash:8].js'
 			: isEnvDevelopment
-				? 'static/js/[name].js'
-				: undefined,
+			? 'static/js/[name].js'
+			: undefined,
 		publicPath: '/',
 		// Point sourcemap entries to original disk location (format as URL on Windows)
 		devtoolModuleFilenameTemplate: isEnvProduction
-			? info => path.relative(sourceDirectory, info.absoluteResourcePath).replace(/\\/g, '/')
+			? (info) =>
+					path
+						.relative(sourceDirectory, info.absoluteResourcePath)
+						.replace(/\\/g, '/')
 			: isEnvDevelopment
-				? info => path.resolve(info.absoluteResourcePath).replace(/\\/g, '/')
-				: undefined,
+			? (info) =>
+					path.resolve(info.absoluteResourcePath).replace(/\\/g, '/')
+			: undefined,
 	},
 	optimization: {
 		minimize: isEnvProduction,
@@ -179,12 +190,12 @@ const config: webpack.Configuration = {
 					parser: PostCssSafeParser,
 					map: shouldUseSourceMap
 						? {
-							// `inline: false` forces the sourcemap to be output into a
-							// separate file
-							inline: false,
-							// `annotation: true` appends the sourceMappingURL to the end of
-							// the css file, helping the browser find the sourcemap
-							annotation: true,
+								// `inline: false` forces the sourcemap to be output into a
+								// separate file
+								inline: false,
+								// `annotation: true` appends the sourceMappingURL to the end of
+								// the css file, helping the browser find the sourcemap
+								annotation: true,
 						  }
 						: false,
 				},
@@ -200,7 +211,7 @@ const config: webpack.Configuration = {
 		// Keep the runtime chunk separated to enable long term caching
 		// https://twitter.com/wSokra/status/969679223278505985
 		runtimeChunk: {
-			name: x => `${runtimePrefix}${x.name}`,
+			name: (x) => `${runtimePrefix}${x.name}`,
 		},
 	},
 	resolve: {
@@ -208,7 +219,7 @@ const config: webpack.Configuration = {
 		extensions: ['.tsx', '.ts', '.mjs', '.js'],
 		alias: isEnvDevelopment
 			? {
-				'react-dom': '@hot-loader/react-dom',
+					'react-dom': '@hot-loader/react-dom',
 			  }
 			: {},
 		plugins: [
@@ -217,7 +228,9 @@ const config: webpack.Configuration = {
 			// To fix this, we prevent you from importing files out of src/ -- if you'd like to,
 			// please link the files into your node_modules/ and let module-resolution kick in.
 			// Make sure your source files are compiled, as they will not be processed in any way.
-			new ModuleScopePlugin(sourceDirectory, [path.join(rootDirectory, 'package.json')]),
+			new ModuleScopePlugin(sourceDirectory, [
+				path.join(rootDirectory, 'package.json'),
+			]),
 		],
 	},
 	devServer: {
@@ -228,7 +241,8 @@ const config: webpack.Configuration = {
 		historyApiFallback: true,
 		clientLogLevel: 'none',
 		contentBase: path.join(__dirname, 'public'),
-		disableHostCheck: !proxy || process.env.DANGEROUSLY_DISABLE_HOST_CHECK === 'true',
+		disableHostCheck:
+			!proxy || process.env.DANGEROUSLY_DISABLE_HOST_CHECK === 'true',
 		stats: {
 			colors: true,
 		},
@@ -266,13 +280,19 @@ const config: webpack.Configuration = {
 						loader: 'babel-loader',
 						options: {
 							babelrc: false,
-							sourceMaps: process.env.SOURCE_MAPS || process.env.DEV_TOOL ? true : false,
+							sourceMaps:
+								process.env.SOURCE_MAPS || process.env.DEV_TOOL
+									? true
+									: false,
 							presets: [
 								[
 									'@babel/preset-env',
 									{
 										targets: {
-											browsers: ['last 2 versions', 'ie >= 10'],
+											browsers: [
+												'last 2 versions',
+												'ie >= 10',
+											],
 										},
 									},
 								],
@@ -287,7 +307,8 @@ const config: webpack.Configuration = {
 									{
 										loaderMap: {
 											svg: {
-												ReactComponent: '@svgr/webpack?-svgo,+ref![path]',
+												ReactComponent:
+													'@svgr/webpack?-svgo,+ref![path]',
 											},
 										},
 									},
@@ -302,8 +323,14 @@ const config: webpack.Configuration = {
 										cssPropOptimization: true,
 									},
 								],
-								['@babel/plugin-proposal-decorators', { legacy: true }],
-								['@babel/plugin-proposal-class-properties', { loose: true }],
+								[
+									'@babel/plugin-proposal-decorators',
+									{ legacy: true },
+								],
+								[
+									'@babel/plugin-proposal-class-properties',
+									{ loose: true },
+								],
 								'@babel/plugin-proposal-numeric-separator',
 								'@babel/plugin-syntax-dynamic-import',
 								'react-hot-loader/babel',
@@ -374,7 +401,8 @@ const config: webpack.Configuration = {
 						use: getStyleLoaders(
 							{
 								importLoaders: 2,
-								sourceMap: isEnvProduction && shouldUseSourceMap,
+								sourceMap:
+									isEnvProduction && shouldUseSourceMap,
 							},
 							'sass-loader'
 						),
@@ -391,7 +419,8 @@ const config: webpack.Configuration = {
 						use: getStyleLoaders(
 							{
 								importLoaders: 2,
-								sourceMap: isEnvProduction && shouldUseSourceMap,
+								sourceMap:
+									isEnvProduction && shouldUseSourceMap,
 								modules: true,
 							},
 							'sass-loader'
@@ -405,7 +434,7 @@ const config: webpack.Configuration = {
 								attributes: false,
 								minimize: isEnvProduction
 									? {
-										conservativeCollapse: false,
+											conservativeCollapse: false,
 									  }
 									: false,
 								//attrs: ['img:src', 'source:src', 'video:poster', 'link:href'],
@@ -448,18 +477,18 @@ const config: webpack.Configuration = {
 			template: './index.html',
 			...(isEnvProduction
 				? {
-					minify: {
-						removeComments: true,
-						collapseWhitespace: true,
-						removeRedundantAttributes: true,
-						useShortDoctype: true,
-						removeEmptyAttributes: true,
-						removeStyleLinkTypeAttributes: true,
-						keepClosingSlash: true,
-						minifyJS: true,
-						minifyCSS: true,
-						minifyURLs: true,
-					},
+						minify: {
+							removeComments: true,
+							collapseWhitespace: true,
+							removeRedundantAttributes: true,
+							useShortDoctype: true,
+							removeEmptyAttributes: true,
+							removeStyleLinkTypeAttributes: true,
+							keepClosingSlash: true,
+							minifyJS: true,
+							minifyCSS: true,
+							minifyURLs: true,
+						},
 				  }
 				: null),
 		}),
@@ -467,7 +496,9 @@ const config: webpack.Configuration = {
 		// a network request.
 		isEnvProduction &&
 			shouldInlineRuntimeChunk &&
-			new InlineChunkHtmlPlugin(HtmlWebpackPlugin, [new RegExp(`${runtimePrefix}.+[.]js$`)]),
+			new InlineChunkHtmlPlugin(HtmlWebpackPlugin, [
+				new RegExp(`${runtimePrefix}.+[.]js$`),
+			]),
 		isEnvDevelopment && new CaseSensitivePathsPlugin(),
 		isEnvProduction &&
 			new MiniCssExtractPlugin({

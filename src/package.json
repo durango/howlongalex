@@ -9,7 +9,8 @@
     "ncu:update": "npm run ncu -- -u",
     "clean": "rimraf ./dist",
     "dist": "npm run clean && webpack",
-    "dist:prod": "NODE_ENV=production npm run dist -- -p"
+    "dist:prod": "NODE_ENV=production npm run dist -- -p && npm run copy-to-root",
+    "copy-to-root": "cp -r dist/* .. && cp ../index.html ../404.html"
   },
   "dependencies": {
     "@babel/core": "^7.9.6",
