@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { hot } from 'react-hot-loader/root'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { About } from './About'
 import { Alex } from './Alex'
 import { NotFound } from './NotFound'
 
@@ -12,6 +13,7 @@ class App extends Component {
 			<Router>
 				<Switch>
 					<Route path="/" exact component={Alex} />
+					<Route path="/about" exact component={About} />
 					<Route path="/:t" exact component={({ match }) => <Alex time={match.params.t} />} />
 					<Route component={NotFound} />
 				</Switch>
