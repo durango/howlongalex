@@ -10,6 +10,8 @@
         </legend>
         <label for="hours">Hours:</label>
         <input type="text" name="hours" id="hours" />
+		<label for="task">Task (optional):</label>
+        <input type="text" name="task" id="task" />
         <input type="submit" />
       </fieldset>
     </form>
@@ -25,18 +27,37 @@
       function estimateTime(e) {
         e.preventDefault();
         var hours = parseFloat(document.getElementById("hours").value);
-        if (isNaN(hours)) {
+        var task = document.getElementById("task").value
+		if (isNaN(hours) || hours < 0) {
           window.alert('Invalid value for "hours"');
           return false;
         }
 
-        var estimation = hours * 2.718;
-        alexUnits.innerHTML = hours;
-        estimate.innerHTML = estimation.toFixed(2);
+		var chart = new CanvasJS.Chart("chartContainer", {
+			theme: "light1",
+			animationEnabled: false, 	
+			title:{ text: "Alex Chart" },
+			data: [ { type: "area",	dataPoints: [] } ]
+		});
+		
+		var multiplier = 2.718;
+		alexUnits.innerHTML = hours;
+		var estimation = hours * multiplier;
+		estimate.innerHTML = estimation.toFixed(2);
+		if (task.toLowerCase() === 'github actions') {
+			setInterval(() => {
+				var newEstimate = parseFloat(estimate.innerHTML) * multiplier
+				estimate.innerHTML = newEstimate.toFixed(2);
+				chart.options.data[0].dataPoints.push({ y: newEstimate });
+				chart.render();
+			}, 1500);
+		}
         answer.style = "";
       }
 
       document.forms[0].onsubmit = estimateTime;
-    </script>
+	</script>
+	<div id="chartContainer" style="height: 370px; width: 100%;"></div>
+	<script src="https://canvasjs.com/assets/script/canvasjs.min.js"> </script>
   </body>
 </html>
