@@ -1,0 +1,46 @@
+{
+  // See http://go.microsoft.com/fwlink/?LinkId=827846 to learn about workspace recommendations.
+  // Extension identifier format: ${publisher}.${name}. Example: vscode.csharp
+
+  // List of extensions which should be recommended for users of this workspace.
+  "recommendations": [
+    "akamud.vscode-caniuse",
+    "christian-kohler.npm-intellisense",
+    "christian-kohler.path-intellisense",
+    "codezombiech.gitignore",
+    "coenraads.bracket-pair-colorizer",
+    "cssho.vscode-svgviewer",
+    "davidanson.vscode-markdownlint",
+    "docsmsft.docs-article-templates",
+    "docsmsft.docs-authoring-pack",
+    "docsmsft.docs-markdown",
+    "docsmsft.docs-preview",
+    "docsmsft.docs-yaml",
+    "dweber019.vscode-style-formatter",
+    "eamodio.gitlens",
+    "editorconfig.editorconfig",
+    "eg2.vscode-npm-script",
+    "esbenp.prettier-vscode",
+    "file-icons.file-icons",
+    "forbeslindesay.vscode-sql-template-literal",
+    "icanhasjonas.vscode-js-template-literal",
+    "formulahendry.auto-close-tag",
+    "formulahendry.auto-rename-tag",
+    "joelday.docthis",
+    "jpoissonnier.vscode-styled-components",
+    "kisstkondoros.vscode-gutter-preview",
+    "kumar-harsh.graphql-for-vscode",
+    "mikestead.dotenv",
+    "mishkinf.goto-next-previous-member",
+    "robinbentley.sass-indented",
+    "dbaeumer.vscode-eslint",
+    "sandy081.todotasks",
+    "stevejpurves.cucumber",
+    "streetsidesoftware.code-spell-checker",
+    "visualstudioexptteam.vscodeintellicode",
+    "wayou.vscode-todo-highlight",
+    "zignd.html-css-class-completion"
+  ],
+  // List of extensions recommended by VS Code that should not be recommended for users of this workspace.
+  "unwantedRecommendations": ["dbaeumer.jshint"]
+}
