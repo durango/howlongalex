@@ -1,0 +1,42 @@
+<html>
+  <head>
+    <title>How long will this really take Alex?</title>
+  </head>
+  <body>
+    <form>
+      <fieldset>
+        <legend>
+          How many hours did Alex say it would take?
+        </legend>
+        <label for="hours">Hours:</label>
+        <input type="text" name="hours" id="hours" />
+        <input type="submit" />
+      </fieldset>
+    </form>
+    <p id="answer" style="display: none;">
+      <span id="alexUnits"></span> in "Alex hours" is really
+      <span id="estimate"></span> hours
+    </p>
+    <!-- welcome to geocities -->
+    <script type="text/javascript">
+      var estimate = document.getElementById("estimate");
+      var alexUnits = document.getElementById("alexUnits");
+      var answer = document.getElementById("answer");
+      function estimateTime(e) {
+        e.preventDefault();
+        var hours = parseFloat(document.getElementById("hours").value);
+        if (isNaN(hours)) {
+          window.alert('Invalid value for "hours"');
+          return false;
+        }
+
+        var estimation = hours * 2.718;
+        alexUnits.innerHTML = hours;
+        estimate.innerHTML = estimation.toFixed(2);
+        answer.style = "";
+      }
+
+      document.forms[0].onsubmit = estimateTime;
+    </script>
+  </body>
+</html>
